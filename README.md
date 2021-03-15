@@ -18,7 +18,12 @@ dotnet publish -r win-x86
 
 An error occurs. When publishing with a specific runtime (e.g. `-r win-x86`)
 then the contents of `runtimes/<RID>/*` are trying to be copied, **without
-preserving the directory structure** to the publish output directory, and fails.
+preserving the directory structure** to the publish output directory, and files
+are overwritten.
+
+In .NET 5 this results in `foo/bar.txt` overwritting `bar.txt`.
+
+In .NET 6 this results in an error:
 
 ```shell
 error NETSDK1148: Found multiple publish output files with the same relative path: /Users/USER/.nuget/packages/nativepackage/0.1.0/runtimes/win-x86/native/bar.txt, /Users/USER/.nuget/packages/nativepackage/0.1.0/runtimes/win-x86/native/foo/bar.txt. [/Users/USER/repos/bug-dotnet-nuget-native-publish/ManagedApp/ManagedApp.csproj]
